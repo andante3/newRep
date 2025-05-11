@@ -22,8 +22,16 @@ public class Message {
         return header;
     }
 
+    public void setHeader(String string) {
+        header = string;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String string) {
+        text = string;
     }
 
     public User getSender() {

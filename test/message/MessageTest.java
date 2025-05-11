@@ -20,9 +20,5 @@ class MessageTest {
         Message message = new Message(user1, user2);
         assertEquals(2, Main.users.size());
     }
-    @AfterEach
-    public void testCheckOutbox() {
-//        assertEquals(1, user1.getOutbox().size());
-    }
 
 }

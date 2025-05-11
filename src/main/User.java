@@ -3,7 +3,7 @@ package main;
 import java.util.*;
 
 public class User {
-    private final String user;
+    private String user;
     private final List<String> inbox = new ArrayList<>();
     private final List<String> spam = new ArrayList<>();
     private final List<String> outbox = new ArrayList<>();
@@ -15,6 +15,10 @@ public class User {
 
     public String getUser() {
         return user;
+    }
+
+    public void setUser(String string){
+        user = string;
     }
 
     public List<String> getInbox() {
@@ -55,7 +59,7 @@ public class User {
 
     }
 
-    private boolean isNumber(String string) {
+    public boolean isNumber(String string) {
         for (char c : string.toCharArray())
             if (!Character.isDigit(c))
                 return false;

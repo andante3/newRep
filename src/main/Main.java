@@ -3,31 +3,31 @@ package main;
 import java.util.*;
 
 public class Main {
-    private static Scanner scanner;
-    private static String user = "";
-    private static List<String> commands = new ArrayList<>();
+    public static Scanner scanner;
+    public static String user = "";
+    public static List<String> commands = new ArrayList<>();
     public static List<String> users = new ArrayList<>();
-    private static User userObject;
+    public static User userObject;
 
     private static void init() {
         commands = Arrays.asList("add", "list", "send", "inbox", "spam", "outbox", "setfilter", "user", "exit", "help");
         scanner = new Scanner(System.in);
     }
 
-    private static List<String> getTokens(String string, boolean makeLowerCase) {
+    public static List<String> getTokens(String string, boolean makeLowerCase, boolean noEmptyTokens) {
         String[] temp = string.split("[^A-Za-z0-9_]");
         List<String> list = new ArrayList<>();
         for (String token : temp)
-            if (makeLowerCase)
-                list.add(token.toLowerCase());
-            else
-                list.add(token);
+            if (!token.trim().isEmpty() || !noEmptyTokens)
+                if (makeLowerCase)
+                    list.add(token.toLowerCase());
+                else
+                    list.add(token);
         return list;
     }
 
-    private static String getCommand() {
-        System.out.printf("Enter a command, use 'help' if needed (%s): ", user);
-        String line = scanner.nextLine().trim().toLowerCase();
+    public static String getCommand(String line) {
+        line = line.trim().toLowerCase();
         if (line.equals("exit") || line.equals("help"))
             return line;
         if (user.isEmpty() && !line.equals("add")) {
@@ -35,7 +35,7 @@ public class Main {
             return "Error";
         }
         int length = line.length();
-        List<String> tokens = getTokens(line, true);
+        List<String> tokens = getTokens(line, true, false);
         if (tokens.isEmpty() || tokens.getFirst().length() != length || tokens.size() > 1
                 || !commands.contains(tokens.getFirst())) {
             System.out.println("Wrong command");
@@ -44,7 +44,7 @@ public class Main {
         return tokens.getFirst();
     }
 
-    private static void setUserActive(String name, boolean printIfExist) {
+    public static void setUserActive(String name, boolean printIfExist) {
         if (!users.contains(name)) {
             users.add(name);
             Collections.sort(users);
@@ -58,7 +58,11 @@ public class Main {
     public static String getUser(String prompt) {
         System.out.print(prompt);
         String line = scanner.nextLine().trim();
-        List<String> tokens = getTokens(line, false);
+        return getUserForTests(line);
+    }
+
+    public static String getUserForTests(String line) {
+        List<String> tokens = getTokens(line, false, false);
         if (tokens.size() != 1) {
             System.out.println("Name must be one word and consist of latin letters and digits only");
             System.out.println("First symbol is a letter");
@@ -75,7 +79,7 @@ public class Main {
         return tokens.getFirst();
     }
 
-    private static void printListOfUsers() {
+    public static void printListOfUsers() {
         if (users.isEmpty())
             System.out.println("No users");
         else {
@@ -85,7 +89,6 @@ public class Main {
                 System.out.println(user);
             System.out.printf("Total: %d users%n", users.size());
             System.out.println("==========================");
-
         }
     }
 
@@ -139,7 +142,9 @@ public class Main {
     public static void main(String[] args) {
         init();
         while (true) {
-            String command = getCommand();
+            System.out.printf("Enter a command, use 'help' if needed (%s): ", user);
+            String line = scanner.nextLine();
+            String command = getCommand(line);
             if (!command.equals("Error"))
                 switch (command) {
                     case "add":
