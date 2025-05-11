@@ -1,4 +1,4 @@
-package user;
+package main;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ public class User {
     private final List<String> inbox = new ArrayList<>();
     private final List<String> spam = new ArrayList<>();
     private final List<String> outbox = new ArrayList<>();
-    private Map<String, String> filters = new HashMap<>();
+    private Map<String, String> spamFilter = new HashMap<>();
 
     public User(String user) {
         this.user = user;
@@ -41,12 +41,18 @@ public class User {
         outbox.add(string);
     }
 
-    public String getFilters(String string) {
-        return filters.get(string);
+    public String getSpamFilter(String string) {
+        return spamFilter.get(string);
     }
 
-    public void setFilters(Map<String, String> newFilters) {
-        filters = newFilters;
+    public void setSpamFilter(Map<String, String> newFilters) {
+        spamFilter = newFilters;
+    }
+
+    public void setSpamFilter(String filterName, String keys) {
+        spamFilter.remove(filterName);
+        spamFilter.put(filterName, keys);
+
     }
 
     private boolean isNumber(String string) {
@@ -62,14 +68,13 @@ public class User {
             String filterName = scanner.nextLine().trim().toLowerCase();
             switch (filterName) {
                 case "simple":
-                    filters.put(filterName, "yes");
+                    spamFilter.put(filterName, "yes");
                     System.out.println("Simple filter is set");
                     break;
                 case "keywords":
                     System.out.print("Enter keywords through space: ");
                     String keys = scanner.nextLine().trim().toLowerCase();
-                    filters.remove(filterName);
-                    filters.put(filterName, keys);
+                    setSpamFilter(filterName, keys);
                     System.out.println("Keyword filter is set");
                     break;
                 case "repetition":
@@ -79,13 +84,13 @@ public class User {
                         System.out.println("Not a number");
                         break;
                     }
-                    filters.put(filterName, numberOfRepetitions);
+                    spamFilter.put(filterName, numberOfRepetitions);
                     System.out.println("Repetition filter is set");
                     break;
                 case "sender":
                     String userName = Main.getUser("Enter the sender name: ");
                     if (!userName.isEmpty())
-                        filters.put(filterName, userName);
+                        spamFilter.put(filterName, userName);
                     System.out.println("Sender filter is set");
                     break;
                 case "done":

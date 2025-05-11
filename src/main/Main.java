@@ -1,4 +1,4 @@
-package user;
+package main;
 
 import java.util.*;
 
@@ -10,8 +10,8 @@ public class Main {
     private static User userObject;
 
     private static void init() {
-        String[] temp = {"add", "list", "send", "inbox", "spam", "outbox", "setfilter", "user", "exit"};
-        commands = Arrays.asList(temp);
+        commands = Arrays.asList(new String[]{"add", "list", "send", "inbox", "spam", "outbox", "setfilter",
+                                              "user", "exit", "help"});
         scanner = new Scanner(System.in);
     }
 
@@ -27,9 +27,9 @@ public class Main {
     }
 
     private static String getCommand() {
-        System.out.printf("Enter a command (%s): ", user);
+        System.out.printf("Enter a command, use 'help' if needed (%s): ", user);
         String line = scanner.nextLine().trim().toLowerCase();
-        if (line.equals("exit"))
+        if (line.equals("exit") || line.equals("help"))
             return line;
         if (user.isEmpty() && !line.equals("add")) {
             System.out.println("First command must be 'add'! No one user is defined");
@@ -172,6 +172,10 @@ public class Main {
                         break;
                     case "exit":
                         return;
+                    case "help":
+                        System.out.println("Command list: add, list, send, inbox, spam, outbox, setfilter");
+                        System.out.println("Additional commands: user (changes active user), exit, help");
+                        break;
                     default:
                         System.out.println("Unknown command");
                         break;

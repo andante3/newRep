@@ -1,8 +1,9 @@
 package message;
 
+import main.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import user.Main;
+import main.Main;
 
 import java.util.Scanner;
 
@@ -12,10 +13,10 @@ class MessageTest {
     @Test
     public void testSendMessage() {
         Scanner scanner = new Scanner(System.in);
-        user.User user1 = new user.User("Ma");
-        user.User user2 = new user.User("Ig");
-        user.Main.users.add("Ma");
-        user.Main.users.add("Ig");
+        User user1 = new User("Ma");
+        User user2 = new User("Ig");
+        Main.users.add("Ma");
+        Main.users.add("Ig");
         Message message = new Message(user1, user2);
         assertEquals(2, Main.users.size());
     }

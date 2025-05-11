@@ -9,7 +9,7 @@ import java.util.Map;
 public class RepetitionSpamFilter implements SpamFilter {
     @Override
     public boolean isSpam(Message message) {
-        if (message.getReceiver().getFilters("repetition") == null)
+        if (message.getReceiver().getSpamFilter("repetition") == null)
             return false;
         String allText = message.getText().toLowerCase();
         String[] words = allText.split("[^A-Za-z0-9А-Яа-яЁё]");
@@ -22,7 +22,7 @@ public class RepetitionSpamFilter implements SpamFilter {
             else
                 wordsMap.put(word, 1);
         }
-        int repetitionNumber = Integer.parseInt(message.getReceiver().getFilters("repetition"));
+        int repetitionNumber = Integer.parseInt(message.getReceiver().getSpamFilter("repetition"));
         return Collections.max(wordsMap.values()) > repetitionNumber;
     }
 }

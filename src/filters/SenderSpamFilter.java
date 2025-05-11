@@ -4,8 +4,8 @@ import message.Message;
 public class SenderSpamFilter implements SpamFilter{
     @Override
     public boolean isSpam(Message message) {
-        if (message.getReceiver().getFilters("sender") == null)
+        if (message.getReceiver().getSpamFilter("sender") == null)
             return false;
-        return message.getSender().getUser().equals(message.getReceiver().getFilters("sender"));
+        return message.getSender().getUser().equals(message.getReceiver().getSpamFilter("sender"));
     }
 }

@@ -5,7 +5,7 @@ public class SimpleSpamFilter implements SpamFilter{
 
     @Override
     public boolean isSpam(Message message) {
-        if (message.getReceiver().getFilters("simple") == null)
+        if (message.getReceiver().getSpamFilter("simple") == null)
             return false;
         String allText = message.getHeader() + " " + message.getText();
         String[] words = allText.split("[^A-Za-z0-9А-Яа-яЁё]");

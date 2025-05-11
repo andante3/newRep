@@ -2,15 +2,18 @@ package message;
 
 import java.util.Scanner;
 import filters.CompositeSpamFilter;
-import user.User;
+//import main.Main;
+//import main.UserStorage;
+//import main.User;
+import main.*;
 
 public class Message {
     private String header;
     private String text;
-    private final user.User sender;
-    private user.User receiver;
+    private final User sender;
+    private User receiver;
 
-    public Message(user.User sender, user.User receiver) {
+    public Message(User sender, User receiver) {
         this.sender = sender;
         this.receiver = receiver;
     }
@@ -42,11 +45,11 @@ public class Message {
     }
 
     public  void sendMessage(Scanner scanner) {
-        String name = user.Main.getUser("Enter the receiver name: ");
+        String name = Main.getUser("Enter the receiver name: ");
         if (name.isEmpty())
             return;
-        if (user.Main.users.contains(name)) {
-            receiver = user.UserStorage.getUser(name);
+        if (Main.users.contains(name)) {
+            receiver = UserStorage.getUser(name);
             if (wrightLetter(scanner)) {
                 System.out.printf("Letter from %s to %s is sent%n", sender.getUser(), receiver.getUser());
             } else
