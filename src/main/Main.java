@@ -10,8 +10,7 @@ public class Main {
     private static User userObject;
 
     private static void init() {
-        commands = Arrays.asList(new String[]{"add", "list", "send", "inbox", "spam", "outbox", "setfilter",
-                                              "user", "exit", "help"});
+        commands = Arrays.asList("add", "list", "send", "inbox", "spam", "outbox", "setfilter", "user", "exit", "help");
         scanner = new Scanner(System.in);
     }
 

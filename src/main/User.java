@@ -46,7 +46,7 @@ public class User {
     }
 
     public void setSpamFilter(Map<String, String> newFilters) {
-        spamFilter = newFilters;
+        spamFilter = new HashMap<>(newFilters);
     }
 
     public void setSpamFilter(String filterName, String keys) {
