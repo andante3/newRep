@@ -13,7 +13,7 @@ class MainTest {
 
     @Test
     public void getCommandTest() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "add";
         String actual = getCommand("add");
         assertEquals(expected, actual);
@@ -21,7 +21,7 @@ class MainTest {
 
     @Test
     public void getCommandTestLeadingSpaces() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "add";
         String actual = getCommand("   add");
         assertEquals(expected, actual);
@@ -29,7 +29,7 @@ class MainTest {
 
     @Test
     public void getCommandTestUpperCase() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "add";
         String actual = getCommand("ADD");
         assertEquals(expected, actual);
@@ -37,7 +37,7 @@ class MainTest {
 
     @Test
     public void getCommandTestWrong() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "Error";
         String actual = getCommand("a;ssf;sfh");
         assertEquals(expected, actual);
@@ -45,7 +45,7 @@ class MainTest {
 
     @Test
     public void getCommandTestEmptyLine() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "Error";
         String actual = getCommand("");
         assertEquals(expected, actual);
@@ -53,7 +53,7 @@ class MainTest {
 
     @Test
     public void getCommandTestNotInCommandList() {
-        commands = Arrays.asList("add");
+        setCommands(Arrays.asList("add"));
         String expected = "Error";
         String actual = getCommand("list");
         assertEquals(expected, actual);
@@ -61,8 +61,8 @@ class MainTest {
 
     @Test
     public void getCommandTestIncludedInCommandListWithUser() {
-        commands = Arrays.asList("add", "list");
-        user = "Anybody";
+        setCommands(Arrays.asList("add", "list"));
+        setUser("Anybody");
 
         String expected = "list";
         String actual = getCommand("list");
@@ -122,7 +122,7 @@ class MainTest {
     public void setUserActiveTest() {
         String name = "John";
         setUserActive(name,false);
-        String expected = userObject.getUser();
+        String expected = getUserObject().getUser();
         String actual = name;
         assertEquals(expected, actual);
     }

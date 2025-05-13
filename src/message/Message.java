@@ -1,11 +1,5 @@
 package message;
-
-import java.util.Scanner;
-import filters.CompositeSpamFilter;
-//import main.Main;
-//import main.UserStorage;
-//import main.User;
-import main.*;
+import user.User;
 
 public class Message {
     private String header;
@@ -42,39 +36,7 @@ public class Message {
         return receiver;
     }
 
-    private void setHeader(Scanner scanner) {
-        System.out.print("Enter a letter header: ");
-        header = scanner.nextLine();
-    }
-
-    private void setText(Scanner scanner) {
-        System.out.print("Enter letter text: ");
-        text = scanner.nextLine();
-    }
-
-    public  void sendMessage(Scanner scanner) {
-        String name = Main.getUser("Enter the receiver name: ");
-        if (name.isEmpty())
-            return;
-        if (Main.users.contains(name)) {
-            receiver = UserStorage.getUser(name);
-            if (wrightLetter(scanner)) {
-                System.out.printf("Letter from %s to %s is sent%n", sender.getUser(), receiver.getUser());
-            } else
-                System.out.println("Something got wrong. Try later");
-        } else
-            System.out.printf("user.User %s is not found%n", name);
-    }
-
-    private boolean wrightLetter(Scanner scanner) {
-        setHeader(scanner);
-        setText(scanner);
-        sender.setOutbox(receiver.getUser() + ": " + header + ": " + text);
-        if (new CompositeSpamFilter().isSpam(this))
-            receiver.setSpam(sender.getUser() + ": " + header + ": " + text);
-        else
-            receiver.setInbox(sender.getUser() + ": " + header + ": " + text);
-
-        return true;
+    public void setReceiver(User user) {
+        receiver = user;
     }
 }

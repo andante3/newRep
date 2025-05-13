@@ -1,18 +1,41 @@
 package main;
 
+import user.User;
+
 import java.util.*;
 
 public class Main {
-    public static Scanner scanner;
-    public static String user = "";
-    public static List<String> commands = new ArrayList<>();
-    public static List<String> users = new ArrayList<>();
-    public static User userObject;
+    private static Scanner scanner;
+    private static String user = "";
+    private static List<String> commands = new ArrayList<>();
+    private final static List<String> users = new ArrayList<>();
+    private static User userObject;
 
     private static void init() {
         commands = Arrays.asList("add", "list", "send", "inbox", "spam", "outbox", "setfilter", "user", "exit", "help");
         scanner = new Scanner(System.in);
     }
+
+    public static void setUser(String string) {
+        user = string;
+    }
+
+    public static void setCommands(List<String> list) {
+        commands = list;
+    }
+
+    public static List<String> getCommands() {
+        return commands;
+    }
+
+    public static List<String> getUsers() {
+        return users;
+    }
+
+    public static User getUserObject() {
+        return userObject;
+    }
+
 
     public static List<String> getTokens(String string, boolean makeLowerCase, boolean noEmptyTokens) {
         String[] temp = string.split("[^A-Za-z0-9_]");
@@ -50,7 +73,7 @@ public class Main {
             Collections.sort(users);
             UserStorage.setUser(name);
         } else if (printIfExist)
-            System.out.printf("user.User %s is already exist%n", name);
+            System.out.printf("User %s already exists%n", name);
         user = name;
         userObject = UserStorage.getUser(name);
     }
@@ -95,7 +118,7 @@ public class Main {
     private static void changeUser() {
         String name = getUser("Enter an existing user name: ");
         if (!users.contains(name))
-            System.out.printf("user.User %s is not found%n", name);
+            System.out.printf("User %s is not found%n", name);
         else
             setUserActive(name, false);
     }
@@ -156,8 +179,7 @@ public class Main {
                         printListOfUsers();
                         break;
                     case "send":
-                        message.Message temp = new message.Message(userObject,null);
-                        temp.sendMessage(scanner);
+                        userObject.sendMessage(scanner, new message.Message(userObject,null));
                         break;
                     case "inbox":
                         printInbox();

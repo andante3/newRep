@@ -1,5 +1,7 @@
 package main;
 
+import user.User;
+
 import java.util.HashMap;
 import java.util.Map;
 

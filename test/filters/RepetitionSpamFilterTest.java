@@ -1,6 +1,6 @@
 package filters;
 
-import main.User;
+import user.User;
 import message.Message;
 import org.junit.jupiter.api.Test;
 
